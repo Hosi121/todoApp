@@ -1,0 +1,87 @@
+name: New task
+description: For new task assign
+title: "[Task]: "
+labels: ["task", "triage"]
+assignees:
+  - Hosi121
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill the form to assign new task!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: as-is
+    attributes:
+      label: As Is
+      description: What is the current situation?
+      placeholder: Describe the current situation
+      value: ""
+    validations:
+      required: true
+  - type: textarea
+    id: to-be
+    attributes:
+      label: To Be
+      description: What is the desired outcome?
+      placeholder: Describe the desired outcome
+      value: ""
+    validations:
+      required: true
+  - type: textarea
+    id: action
+    attributes:
+      label: Action
+      description: What actions need to be taken?
+      placeholder: Describe the actions to be taken
+      value: ""
+    validations:
+      required: true
+  - type: textarea
+    id: memo
+    attributes:
+      label: Memo
+      description: Any additional notes or comments?
+      placeholder: Add any additional notes or comments
+      value: ""
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of our software are you running?
+      options:
+        - 1.0.2 (Default)
+        - 1.0.3 (Edge)
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: Did you checked the content?
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
