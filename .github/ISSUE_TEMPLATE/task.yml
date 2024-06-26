@@ -10,6 +10,14 @@ body:
       value: |
         Fill the form to assign new task!
   - type: textarea
+    id: who-do
+    attributes:
+      label: Who do?
+      description: Who tackle to this issue?
+      placeholder: Describe the person who do this task.
+    validations:
+      required: true
+  - type: textarea
     id: as-is
     attributes:
       label: As Is
