@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
 import {  Task } from '../../types/Task';
 import { EditPageProps } from '../../types/EditPageProps';

@@ -1,12 +1,5 @@
-import React from 'react';
 import { FormControlLabel, Checkbox } from '@mui/material';
-
-type CheckboxInputProps = {
-  label: string;
-  name: string;
-  checked: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { CheckboxInputProps } from '../../types/CheckboxInputProps';
 
 const CheckboxInput = ({ label, name, checked, onChange }: CheckboxInputProps) => {
   return (
