@@ -1,15 +1,7 @@
-import React from 'react';
 import { Button } from '@mui/material';
 import TextInput from '../atoms/TextInput';
 import CheckboxInput from '../atoms/CheckboxInput';
-import { Task } from '../../types/Task';
-
-type TaskFormProps = {
-  task: Task;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSave: () => void;
-  onCancel: () => void;
-};
+import { TaskFormProps } from '../../types/TaskFormProps';
 
 const TaskForm = ({ task, onChange, onSave, onCancel }: TaskFormProps) => {
   return (

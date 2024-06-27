@@ -1,4 +1,4 @@
-import TaskCard from '../templetes/TaskCard';
+import TaskCard from '../templates/TaskCard';
 
 import { useState } from 'react';
 import { Task } from '../../types/Task';

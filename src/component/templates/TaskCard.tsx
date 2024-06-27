@@ -1,11 +1,9 @@
-import { Button, TextField } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import { Button } from '@mui/material';
+import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';
 import { Task } from '../../types/Task';
 import { TaskCardProps } from '../../types/TaskCardProps';
-
-
 
 const TaskCard = (props: TaskCardProps) => {
   const { taskList, setTaskList } = props;
@@ -13,13 +11,9 @@ const TaskCard = (props: TaskCardProps) => {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
 
-  useEffect(() => {
-    localStorage.setItem('localTaskList', JSON.stringify(taskList));
-  }, [taskList]);
-
   const dateFormatter = (timeLimit: Date) => {
     const year = timeLimit.getFullYear();
-    const month = timeLimit.getMonth() + 1;
+    const month = timeLimit.getMonth() + 1; //月は0から始まるため +1
     const date = timeLimit.getDate();
     const hour = timeLimit.getHours();
     const minute = timeLimit.getMinutes();
@@ -30,6 +24,10 @@ const TaskCard = (props: TaskCardProps) => {
     setCurrentTask(task);
     setEditModalIsOpen(true);
   };
+
+  useEffect(() => {
+    localStorage.setItem('localTaskList', JSON.stringify(taskList));
+  }, [taskList]);
 
   return (
     <div>
