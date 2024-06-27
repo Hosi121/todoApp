@@ -3,11 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';
 import { Task } from '../../types/Task';
+import { TaskCardProps } from '../../types/TaskCardProps';
 
-type TaskCardProps = {
-  taskList: Task[];
-  setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
-};
+
 
 const TaskCard = (props: TaskCardProps) => {
   const { taskList, setTaskList } = props;
