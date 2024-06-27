@@ -2,14 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import TextInput from '../atoms/TextInput';
 import CheckboxInput from '../atoms/CheckboxInput';
-
-type Task = {
-  id: number;
-  title: string;
-  isDone: boolean;
-  timeLimit: Date;
-  taskDetail: string;
-};
+import { Task } from '../../types/Task';
 
 type TaskFormProps = {
   task: Task;

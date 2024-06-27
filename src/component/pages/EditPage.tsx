@@ -1,19 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
-
-type Task = {
-  id: number;
-  title: string;
-  isDone: boolean;
-  timeLimit: Date;
-  taskDetail: string;
-};
-
-type EditPageProps = {
-  setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
-  setEditModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  currentTask: Task;
-};
+import {  Task } from '../../types/Task';
+import { EditPageProps } from '../../types/EditPageProps';
 
 const EditPage = ({ setTaskList, setEditModalIsOpen, currentTask }: EditPageProps) => {
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
