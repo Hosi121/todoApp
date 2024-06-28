@@ -1,9 +1,11 @@
 import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
-import {  Task } from '../../types/Task';
+import { Task } from '../../types/Task';
 import { EditPageProps } from '../../types/EditPageProps';
 
-const EditPage = ({ setTaskList, setEditModalIsOpen, currentTask }: EditPageProps) => {
+const EditPage = (props: EditPageProps) =>
+{
+  const {taskList, setTaskList, setEditModalIsOpen, currentTask } = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,9 +17,16 @@ const EditPage = ({ setTaskList, setEditModalIsOpen, currentTask }: EditPageProp
   };
 
   const handleSave = () => {
-    setTaskList((prevTasks) =>
-      prevTasks.map((task) => (task.id === editedTask.id ? editedTask : task)),
-    );
+    setTaskList(() =>
+    {
+      if (editedTask.id > taskList.length )
+      {
+        return [...taskList, editedTask];
+      }
+    
+      return taskList.map((task) => (task.id === editedTask.id ? editedTask : task));
+    });
+
     setEditModalIsOpen(false);
   };
 

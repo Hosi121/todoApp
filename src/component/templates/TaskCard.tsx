@@ -47,6 +47,7 @@ const TaskCard = (props: TaskCardProps) => {
       <Modal isOpen={editModalIsOpen}>
         {currentTask && (
           <EditPage
+            taskList={taskList}
             setTaskList={setTaskList}
             setEditModalIsOpen={setEditModalIsOpen}
             currentTask={currentTask}
