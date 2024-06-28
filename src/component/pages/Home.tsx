@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import TaskCard from '../templates/TaskCard';
 
-const TaskCard = () => {
-  type Task = {
-    id: number;
-    title: string;
-    isDone: boolean;
-    timeLimit: Date;
-    taskDetail: string;
-  };
 
+import { useState } from 'react';
+import { Task } from '../../types/Task';
+import MakeTaskButton from '../templates/MakeTaskButton';
+
+const Home = () => {
   const initializeTasks = (): Task[] => {
     const storedOptions = localStorage.getItem('localTaskList');
+
     if (storedOptions) {
       const parsedOptions = JSON.parse(storedOptions);
       return parsedOptions.map((task: any) => ({
@@ -46,31 +44,13 @@ const TaskCard = () => {
 
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
 
-  useEffect(() => {
-    localStorage.setItem('localTaskList', JSON.stringify(taskList));
-  }, [taskList]);
-
-  const dateFormatter = (timeLimit: Date) => {
-    const year = timeLimit.getFullYear();
-    const month = timeLimit.getMonth() + 1;
-    const date = timeLimit.getDate();
-    const hour = timeLimit.getHours();
-    const minute = timeLimit.getMinutes();
-    return `${year}/${month}/${date} ${hour}:${minute}`;
-  };
-
   return (
-    <div>
-      {taskList.map((task: Task) => (
-        <div key={task.id}>
-          <h2>{task.title}</h2>
-          <p>詳細: {task.taskDetail}</p>
-          <p>日時: {dateFormatter(task.timeLimit)}</p>
-          <p>完了？: {task.isDone ? 'Done' : 'Not Done'}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <h1>home</h1>
+      <TaskCard taskList={taskList} setTaskList={setTaskList} />
+      <MakeTaskButton taskList={taskList} setTaskList={setTaskList} />
+    </>
   );
 };
 
-export default TaskCard;
+export default Home;

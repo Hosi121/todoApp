@@ -1,10 +1,9 @@
-import Home from './component/Home.tsx';
+import Home from './component/pages/Home.tsx';
 
 function App() {
   return (
     <>
-      
-      <Home/>
+      <Home />
     </>
   );
 }
