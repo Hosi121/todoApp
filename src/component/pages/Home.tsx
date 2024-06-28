@@ -1,7 +1,9 @@
 import TaskCard from '../templates/TaskCard';
 
+
 import { useState } from 'react';
 import { Task } from '../../types/Task';
+import MakeTaskButton from '../templates/MakeTaskButton';
 
 const Home = () => {
   const initializeTasks = (): Task[] => {
@@ -46,6 +48,7 @@ const Home = () => {
     <>
       <h1>home</h1>
       <TaskCard taskList={taskList} setTaskList={setTaskList} />
+      <MakeTaskButton taskList={taskList} setTaskList={setTaskList} />
     </>
   );
 };
