@@ -36,7 +36,7 @@ const TaskCard = (props: TaskCardProps) => {
           <h2>{task.title}</h2>
           <p>詳細: {task.taskDetail}</p>
           <p>日時: {dateFormatter(task.timeLimit)}</p>
-          <p>完了？: {task.isDone ? 'Done' : 'Not Done'}</p>
+          <p>完了: {task.isDone ? 'Done' : 'Not Done'}</p>
 
           <Button variant="contained" color="primary" onClick={() => handleEditClick(task)}>
             編集
