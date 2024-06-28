@@ -4,11 +4,15 @@ import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';
 import { Task } from '../../types/Task';
 import { TaskCardProps } from '../../types/TaskCardProps';
-import { Checkbox } from '@mui/material';
+
 const TaskCard = (props: TaskCardProps) => {
   const { taskList, setTaskList } = props;
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('localTaskList', JSON.stringify(taskList));
+  }, [taskList]);
 
   const dateFormatter = (timeLimit: Date) => {
     const year = timeLimit.getFullYear();
@@ -24,9 +28,13 @@ const TaskCard = (props: TaskCardProps) => {
     setEditModalIsOpen(true);
   };
 
-  useEffect(() => {
-    localStorage.setItem('localTaskList', JSON.stringify(taskList));
-  }, [taskList]);
+  const handleCheckboxChange = (task: Task, isChecked: boolean) => {
+    setTaskList((prevTaskList) =>
+      prevTaskList.map((t) =>
+        t.id === task.id ? { ...t, isDone: isChecked } : t
+      )
+    );
+  };
 
   return (
     <div>
@@ -40,20 +48,11 @@ const TaskCard = (props: TaskCardProps) => {
             編集
           </Button>
           <Checkbox
-          name="isDone"
+            name="isDone"
             checked={task.isDone}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-  const isChecked = e.target.checked;
-  setTaskList((prevTaskList) =>
-    prevTaskList.map((t) =>
-      t.id === task.id ? { ...t, isDone: isChecked } : t
-    )
-  );
-}}
-            
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCheckboxChange(task, e.target.checked)}
           />
         </div>
-
       ))}
 
       <Modal isOpen={editModalIsOpen}>
