@@ -47,8 +47,7 @@ const Home = () => {
     <>
       <h1>home</h1>
       <TaskCard taskList={taskList} setTaskList={setTaskList} />
-      <MakeTaskButton />
-
+      <MakeTaskButton taskList={taskList} setTaskList={setTaskList} />
     </>
   );
 };
