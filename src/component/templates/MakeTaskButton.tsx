@@ -23,8 +23,8 @@ const MakeTaskButton = (props: MakeTaskButtonProps) => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={onClick}>
-        Make Task
+      <Button variant="contained" color="primary" onClick={onClick}>
+        作成
       </Button>
 
       <Modal isOpen={editModalIsOpen}>
