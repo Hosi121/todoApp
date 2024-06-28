@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Checkbox } from '@mui/material';
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';

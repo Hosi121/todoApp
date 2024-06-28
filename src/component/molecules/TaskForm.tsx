@@ -3,7 +3,9 @@ import TextInput from '../atoms/TextInput';
 import CheckboxInput from '../atoms/CheckboxInput';
 import { TaskFormProps } from '../../types/TaskFormProps';
 
-const TaskForm = ({ task, onChange, onSave, onCancel }: TaskFormProps) => {
+const TaskForm = (props: TaskFormProps) =>
+{
+  const { task, onChange, onSave, onCancel, onDelete} = props;
   return (
     <div>
       <h2>タスクを編集</h2>
@@ -22,6 +24,9 @@ const TaskForm = ({ task, onChange, onSave, onCancel }: TaskFormProps) => {
       </Button>
       <Button variant="outlined" onClick={onCancel}>
         キャンセル
+      </Button>
+      <Button variant="outlined" onClick={onDelete}>
+        消去
       </Button>
     </div>
   );

@@ -5,4 +5,5 @@ export type TaskFormProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSave: () => void;
   onCancel: () => void;
+  onDelete: () => void;
 };
