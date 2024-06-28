@@ -34,12 +34,20 @@ const EditPage = (props: EditPageProps) =>
     setEditModalIsOpen(false);
   };
 
+  const handleDelete = () =>
+  { 
+    setTaskList(taskList.filter((task) => task.id !== editedTask.id));
+    setEditModalIsOpen(false);
+  
+  }
+
   return (
     <TaskForm
       task={editedTask}
       onChange={handleChange}
       onSave={handleSave}
       onCancel={handleCancel}
+      onDelete={handleDelete}
     />
   );
 };
