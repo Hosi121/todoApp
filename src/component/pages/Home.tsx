@@ -44,6 +44,8 @@ const Home = () => {
 
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
 
+  const sortByDone = taskList.sort((taskA, taskB) => (taskA.isDone === taskB.isDone ? 0 : taskA.isDone ? -1 : 1));
+
   return (
     <>
       <h1>home</h1>
