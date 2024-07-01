@@ -42,6 +42,8 @@ const Home = () => {
 
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
 
+  const filteredTaskList = taskList.sort((a, b) => (a.isDone === b.isDone ? 0 : a.isDone ? -1 : 1));
+
   return (
     <>
       <h1>home</h1>
