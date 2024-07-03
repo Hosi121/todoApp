@@ -1,7 +1,6 @@
 import TaskCard from '../templates/TaskCard';
 
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Task } from '../../types/Task';
 import MakeTaskButton from '../templates/MakeTaskButton';
 
@@ -43,6 +42,19 @@ const Home = () => {
   };
 
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
+
+  useEffect(() => {
+    const sortedTasks = [...taskList].sort((taskA, taskB) => {
+      if (taskA.isDone === taskB.isDone) {
+        return 0;
+      } else if (taskA.isDone) {
+        return -1; // taskAが完了、taskBが未完了なのでtaskAを前に
+      } else {
+        return 1; // taskAが未完了、taskBが完了なのでtaskAを後ろに
+      }
+    });
+    setTaskList(sortedTasks);
+  }, [taskList]);
 
   return (
     <>
