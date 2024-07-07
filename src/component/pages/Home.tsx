@@ -53,8 +53,12 @@ const Home = () => {
         return 1; // taskAが未完了、taskBが完了なのでtaskAを後ろに
       }
     });
-    setTaskList(sortedTasks);
-  }, [taskList]);
+
+    // taskListがすでにソートされていない場合のみ更新する
+    if (JSON.stringify(taskList) !== JSON.stringify(sortedTasks)) {
+      setTaskList(sortedTasks);
+    }
+  }, []); 
 
   return (
     <>
