@@ -58,7 +58,7 @@ const Home = () => {
     if (JSON.stringify(taskList) !== JSON.stringify(sortedTasks)) {
       setTaskList(sortedTasks);
     }
-  }, []); 
+  }, [taskList]); 
 
   return (
     <>
