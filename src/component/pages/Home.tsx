@@ -10,7 +10,7 @@ const Home = () => {
 
     if (storedOptions) {
       const parsedOptions = JSON.parse(storedOptions);
-      return parsedOptions.map((task: any) => ({
+      return parsedOptions.map((task: Task) => ({
         ...task,
         timeLimit: new Date(task.timeLimit),
       }));
