@@ -43,15 +43,14 @@ const Home = () => {
 
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
 
-  useEffect(() => {
-    const sortedTasks = [...taskList].sort((taskA, taskB) => {
-      if (taskA.isDone === taskB.isDone) {
-        return 0;
-      } else if (taskA.isDone) {
-        return -1; // taskAが完了、taskBが未完了なのでtaskAを前に
-      } else {
-        return 1; // taskAが未完了、taskBが完了なのでtaskAを後ろに
-      }
+  useEffect(() =>
+  {
+    const sortedTasks = [...taskList].sort((taskA, taskB) =>
+    {
+      //0は何もしない、1はtaskAを前に、-1はtaskBを前に
+      return taskA.isDone === taskB.isDone
+        ? 0
+        : taskA.isDone ? -1 : 1;
     });
 
     // taskListがすでにソートされていない場合のみ更新する
