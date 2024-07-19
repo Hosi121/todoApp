@@ -30,12 +30,18 @@ const CreatePage = (props: CreatePageProps) => {
     setCreateModalIsOpen(false);
   };
 
+   const handleDelete = () => {
+    setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== newTask.id));
+    setCreateModalIsOpen(false);
+    }
+
   return (
     <TaskForm
       task={newTask}
       onChange={handleChange}
       onSave={handleSave}
       onCancel={handleCancel}
+      onDelete={handleDelete}
       isCreateMode={true}  // isCreateMode を追加
     />
   );

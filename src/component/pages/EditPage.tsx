@@ -39,6 +39,7 @@ const EditPage = (props: EditPageProps) =>
       onSave={handleSave}
       onCancel={handleCancel}
       onDelete={handleDelete}
+      isCreateMode={false}
     />
   );
 };
