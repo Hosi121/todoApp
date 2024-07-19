@@ -1,24 +1,14 @@
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import Modal from 'react-modal';
-import EditPage from '../pages/EditPage';
+import CreatePage from '../pages/CreatePage';
 import { MakeTaskButtonProps } from '../../types/MakeTaskButtonProps';
 
 const MakeTaskButton = (props: MakeTaskButtonProps) => {
   const { taskList, setTaskList } = props;
-  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const onClick = () => {
-    setEditModalIsOpen(true);
-  };
-
-  const lastTask = taskList[taskList.length - 1];
-  const newId = lastTask ? lastTask.id + 1 : 1;
-  const newTask = {
-    id: newId,
-    title: '',
-    isDone: false,
-    timeLimit: new Date(),
-    taskDetail: '',
+    setCreateModalIsOpen(true);
   };
 
   return (
@@ -27,15 +17,12 @@ const MakeTaskButton = (props: MakeTaskButtonProps) => {
         作成
       </Button>
 
-      <Modal isOpen={editModalIsOpen}>
-        {newTask && (
-          <EditPage
-            taskList={taskList}
-            setTaskList={setTaskList}
-            setEditModalIsOpen={setEditModalIsOpen}
-            currentTask={newTask}
-          />
-        )}
+      <Modal isOpen={createModalIsOpen}>
+        <CreatePage
+          taskList={taskList}
+          setTaskList={setTaskList}
+          setCreateModalIsOpen={setCreateModalIsOpen}
+        />
       </Modal>
     </>
   );

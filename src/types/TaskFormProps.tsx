@@ -6,4 +6,5 @@ export type TaskFormProps = {
   onSave: () => void;
   onCancel: () => void;
   onDelete: () => void;
+  isCreateMode: boolean;
 };
