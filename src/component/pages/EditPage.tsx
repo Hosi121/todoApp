@@ -5,28 +5,21 @@ import { EditPageProps } from '../../types/EditPageProps';
 
 const EditPage = (props: EditPageProps) =>
 {
-  const {taskList, setTaskList, setEditModalIsOpen, currentTask } = props;
+  const { taskList, setTaskList, setEditModalIsOpen, currentTask } = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setEditedTask({
-      ...editedTask,
+    setEditedTask(prevTask => ({
+      ...prevTask,
       [name]: type === 'checkbox' ? checked : name === 'timeLimit' ? new Date(value) : value,
-    });
+    }));
   };
 
   const handleSave = () => {
-    setTaskList(() =>
-    {
-      if (editedTask.id > taskList.length )
-      {
-        return [...taskList, editedTask];
-      }
-    
-      return taskList.map((task) => (task.id === editedTask.id ? editedTask : task));
-    });
-
+    setTaskList(prevTaskList =>
+      prevTaskList.map(task => (task.id === editedTask.id ? editedTask : task))
+    );
     setEditModalIsOpen(false);
   };
 
@@ -34,12 +27,10 @@ const EditPage = (props: EditPageProps) =>
     setEditModalIsOpen(false);
   };
 
-  const handleDelete = () =>
-  { 
-    setTaskList(taskList.filter((task) => task.id !== editedTask.id));
+  const handleDelete = () => {
+    setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== editedTask.id));
     setEditModalIsOpen(false);
-  
-  }
+  };
 
   return (
     <TaskForm
@@ -48,6 +39,7 @@ const EditPage = (props: EditPageProps) =>
       onSave={handleSave}
       onCancel={handleCancel}
       onDelete={handleDelete}
+      isCreateMode={false}
     />
   );
 };

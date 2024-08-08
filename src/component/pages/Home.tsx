@@ -1,12 +1,10 @@
 import TaskCard from '../templates/TaskCard';
-
 import { useEffect, useState } from 'react';
 import { Task } from '../../types/Task';
 import MakeTaskButton from '../templates/MakeTaskButton';
 
 const initializeTasks = (): Task[] => {
   const storedOptions = localStorage.getItem('localTaskList');
-
   if (storedOptions) {
     const parsedOptions = JSON.parse(storedOptions);
     return parsedOptions.map((task: Task) => ({
@@ -39,25 +37,21 @@ const initializeTasks = (): Task[] => {
     ];
   }
 };
-const Home = () => {
 
+const Home = () => {
   const [taskList, setTaskList] = useState<Task[]>(initializeTasks);
 
-  useEffect(() =>
-  {
-    const sortedTasks = [...taskList].sort((taskA, taskB) =>
-    {
-      //0は何もしない、1はtaskAを前に、-1はtaskBを前に
-      return taskA.isDone === taskB.isDone
-        ? 0
-        : taskA.isDone ? -1 : 1;
-    });
+  useEffect(() => {
+    localStorage.setItem('localTaskList', JSON.stringify(taskList));
+  }, [taskList]);
 
-    // taskListがすでにソートされていない場合のみ更新する
-    if (JSON.stringify(taskList) !== JSON.stringify(sortedTasks)) {
-      setTaskList(sortedTasks);
-    }
-  }, [taskList]); 
+  const sortedTasks = [...taskList].sort((taskA, taskB) => {
+    return taskA.isDone === taskB.isDone ? 0 : taskA.isDone ? 1 : -1;
+  });
+
+  useEffect(() => {
+    setTaskList(sortedTasks);
+  }, []);
 
   return (
     <>
