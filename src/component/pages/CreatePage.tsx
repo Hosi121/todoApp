@@ -22,6 +22,10 @@ const CreatePage = (props: CreatePageProps) => {
   };
 
   const handleSave = () => {
+    if (newTask.title.trim() === '') {
+      alert('タイトルを入力してください');
+      return;
+    }
     setTaskList([...taskList, newTask]);
     setCreateModalIsOpen(false);
   };
@@ -30,10 +34,10 @@ const CreatePage = (props: CreatePageProps) => {
     setCreateModalIsOpen(false);
   };
 
-   const handleDelete = () => {
+  const handleDelete = () => {
     setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== newTask.id));
     setCreateModalIsOpen(false);
-    }
+  };
 
   return (
     <TaskForm
