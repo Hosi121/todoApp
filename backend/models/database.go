@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 
 	"gorm.io/driver/mysql"
@@ -24,11 +24,11 @@ func ConnectDatabase() {
 		os.Getenv("DB_NAME"),
 	)
 	
-	log.Printf("Connecting to database with DSN: %s", dsn)
+	slog.Error("Connecting to database with DSN: %s", dsn)
 
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Could not connect to the database: %v", err)
+		slog.Error("Could not connect to the database: %v", err)
 	}
 
 	DB.AutoMigrate(&Task{})
