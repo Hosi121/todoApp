@@ -4,7 +4,7 @@ import { Task } from '../../types/Task';
 import { CreatePageProps } from '../../types/CreatePageProps';
 
 const CreatePage = (props: CreatePageProps) => {
-  const { taskList, setTaskList, setCreateModalIsOpen } = props;
+  const { taskList, setTaskList, setCreateModalIsOpen, setIsTaskListUpdated} = props;
   const [newTask, setNewTask] = useState<Task>({
     id: taskList.length + 1,
     title: '',
@@ -13,8 +13,34 @@ const CreatePage = (props: CreatePageProps) => {
     taskDetail: '',
   });
 
+  
+
+  const postTask = async (task:Task) => {
+    try {
+      const response = await fetch('http://localhost:8000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create task');
+      }
+
+      const result = await response.json();
+      
+      setIsTaskListUpdated(true);
+      console.log('Task created:', result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    //タスクを編集
     setNewTask({
       ...newTask,
       [name]: type === 'checkbox' ? checked : name === 'timeLimit' ? new Date(value) : value,
@@ -26,7 +52,9 @@ const CreatePage = (props: CreatePageProps) => {
       alert('タイトルを入力してください');
       return;
     }
-    setTaskList([...taskList, newTask]);
+    postTask(newTask);
+    //タスクを追加
+    // setTaskList([...taskList, newTask]);
     setCreateModalIsOpen(false);
   };
 
@@ -34,7 +62,9 @@ const CreatePage = (props: CreatePageProps) => {
     setCreateModalIsOpen(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = () =>
+  {
+    //タスクを消去
     setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== newTask.id));
     setCreateModalIsOpen(false);
   };

@@ -5,7 +5,9 @@ import MakeTaskButton from '../templates/MakeTaskButton';
 
 const initializeTasks = async (): Promise<Task[]> => {
   try {
-    const response = await fetch('http://localhost:8000/tasks');
+    const response = await fetch('http://localhost:8000/tasks', {
+      method: 'GET',
+    });
 
     if (!response.ok) {
       throw new Error('Failed to fetch tasks');
@@ -50,12 +52,14 @@ const initializeTasks = async (): Promise<Task[]> => {
 
 const Home = () => {
   const [taskList, setTaskList] = useState<Task[]>([]);
+  const [isTaskListUpdated, setIsTaskListUpdated] = useState<boolean>(false);
 
   useEffect(() => {
     initializeTasks().then((tasks) => {
       setTaskList(tasks);
+      setIsTaskListUpdated(false);
     });
-  }, []);
+  }, [isTaskListUpdated]);
 
   useEffect(() => {
     localStorage.setItem('localTaskList', JSON.stringify(taskList));
@@ -73,7 +77,11 @@ const Home = () => {
     <>
       <h1>home</h1>
       <TaskCard taskList={taskList} setTaskList={setTaskList} />
-      <MakeTaskButton taskList={taskList} setTaskList={setTaskList} />
+      <MakeTaskButton
+        taskList={taskList}
+        setTaskList={setTaskList}
+        setIsTaskListUpdated={setIsTaskListUpdated}
+      />
     </>
   );
 };
