@@ -9,6 +9,7 @@ const TaskForm = (props: TaskFormProps) => {
   return (
     <div>
       <h2>{isCreateMode ? 'タスクを作成' : 'タスクを編集'}</h2>
+      {/* <p>id:{task.id}</p> */}
       <TextInput label="タイトル" name="title" value={task.title} onChange={onChange} />
       <TextInput label="詳細" name="taskDetail" value={task.taskDetail} onChange={onChange} />
       <TextInput

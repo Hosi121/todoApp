@@ -31,7 +31,7 @@ const CreatePage = (props: CreatePageProps) => {
 
       const result = await response.json();
       
-      setIsTaskListUpdated(true);
+      
       console.log('Task created:', result);
     } catch (error) {
       console.error('Error:', error);
@@ -53,19 +53,23 @@ const CreatePage = (props: CreatePageProps) => {
       return;
     }
     postTask(newTask);
+    setIsTaskListUpdated(true);
     //タスクを追加
     // setTaskList([...taskList, newTask]);
     setCreateModalIsOpen(false);
   };
 
-  const handleCancel = () => {
+  const handleCancel = () =>
+  {
+    // console.log("handleCancel");
     setCreateModalIsOpen(false);
   };
 
   const handleDelete = () =>
   {
     //タスクを消去
-    setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== newTask.id));
+    // setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== newTask.id));
+    
     setCreateModalIsOpen(false);
   };
 

@@ -5,8 +5,27 @@ import { EditPageProps } from '../../types/EditPageProps';
 
 const EditPage = (props: EditPageProps) =>
 {
-  const { taskList, setTaskList, setEditModalIsOpen, currentTask } = props;
+  const { taskList, setTaskList, setEditModalIsOpen, currentTask ,setIsTaskListUpdated} = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
+
+    const deleteTask = async (id: number) => {
+      try {
+        console.log('deleteTask');
+        const response = await fetch(`http://localhost:8000/tasks/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to delete task');
+        }
+
+        
+        console.log('Task deleted:', id);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -27,8 +46,12 @@ const EditPage = (props: EditPageProps) =>
     setEditModalIsOpen(false);
   };
 
-  const handleDelete = () => {
-    setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== editedTask.id));
+  const handleDelete = () =>
+  {
+    deleteTask(editedTask.id);
+    // setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== editedTask.id));
+    // console.log('deleteTask');
+    setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
 

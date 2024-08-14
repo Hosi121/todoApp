@@ -13,4 +13,5 @@ export interface EditPageProps {
   setEditModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   currentTask: Task;
   isCreateMode: boolean;
+  setIsTaskListUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }

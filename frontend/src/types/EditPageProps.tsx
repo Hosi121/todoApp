@@ -4,5 +4,6 @@ export type EditPageProps = {
   taskList: Task[];
   setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
   setEditModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsTaskListUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   currentTask: Task;
 };

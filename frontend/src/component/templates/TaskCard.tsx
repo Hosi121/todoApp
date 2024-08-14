@@ -6,7 +6,7 @@ import { Task } from '../../types/Task';
 import { TaskCardProps } from '../../types/TaskCardProps';
 
 const TaskCard = (props: TaskCardProps) => {
-  const { taskList, setTaskList } = props;
+  const { taskList, setTaskList, setIsTaskListUpdated} = props;
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
 
@@ -62,6 +62,7 @@ const TaskCard = (props: TaskCardProps) => {
             setTaskList={setTaskList}
             setEditModalIsOpen={setEditModalIsOpen}
             currentTask={currentTask}
+            setIsTaskListUpdated={setIsTaskListUpdated}
           />
         )}
       </Modal>

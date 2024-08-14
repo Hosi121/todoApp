@@ -76,7 +76,11 @@ const Home = () => {
   return (
     <>
       <h1>home</h1>
-      <TaskCard taskList={taskList} setTaskList={setTaskList} />
+      <TaskCard
+        taskList={taskList}
+        setTaskList={setTaskList}
+        setIsTaskListUpdated={setIsTaskListUpdated}
+      />
       <MakeTaskButton
         taskList={taskList}
         setTaskList={setTaskList}
