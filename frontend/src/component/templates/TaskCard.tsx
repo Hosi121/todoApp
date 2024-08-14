@@ -28,12 +28,26 @@ const TaskCard = (props: TaskCardProps) => {
     setEditModalIsOpen(true);
   };
 
-  const handleCheckboxChange = (task: Task, isChecked: boolean) => {
-    setTaskList((prevTaskList) =>
-      prevTaskList.map((t) =>
-        t.id === task.id ? { ...t, isDone: isChecked } : t
-      )
-    );
+  const handleCheckboxChange = async (task: Task, isChecked: boolean) =>
+  {
+    
+    try {
+      const response = await fetch(`http://localhost:8000/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...task, isDone: isChecked }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save task');
+      }
+      setIsTaskListUpdated(true);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
   };
 
   return (
