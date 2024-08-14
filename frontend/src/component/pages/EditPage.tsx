@@ -26,19 +26,49 @@ const EditPage = (props: EditPageProps) =>
       }
     };
 
+  const putTask = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/tasks/${editedTask.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(editedTask),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save task');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setEditedTask(prevTask => ({
-      ...prevTask,
-      [name]: type === 'checkbox' ? checked : name === 'timeLimit' ? new Date(value) : value,
-    }));
+
+    setEditedTask((prevTask) => {
+      let newValue;
+
+      if (type === 'checkbox') {
+        newValue = checked;
+      } else if (name === 'timeLimit') {
+        newValue = new Date(value);
+      } else {
+        newValue = value;
+      }
+
+      return {
+        ...prevTask,
+        [name]: newValue,
+      };
+    });
   };
 
+
   const handleSave = () => {
-    setTaskList(prevTaskList =>
-      prevTaskList.map(task => (task.id === editedTask.id ? editedTask : task))
-    );
+    putTask();
+    setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
 
@@ -49,8 +79,6 @@ const EditPage = (props: EditPageProps) =>
   const handleDelete = () =>
   {
     deleteTask(editedTask.id);
-    // setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== editedTask.id));
-    // console.log('deleteTask');
     setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
