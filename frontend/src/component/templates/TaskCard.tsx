@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';
 import { Task } from '../../types/Task';
 import { TaskCardProps } from '../../types/TaskCardProps';
+import { handleCheckboxChange } from '../../services/ApiService';
 
 const TaskCard = (props: TaskCardProps) => {
   const { taskList, setTaskList, setIsTaskListUpdated} = props;
@@ -28,27 +29,6 @@ const TaskCard = (props: TaskCardProps) => {
     setEditModalIsOpen(true);
   };
 
-  const handleCheckboxChange = async (task: Task, isChecked: boolean) =>
-  {
-    try {
-      const response = await fetch(`http://localhost:8000/tasks/${task.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...task, isDone: isChecked }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save task');
-      }
-      setIsTaskListUpdated(true);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-
-  };
-
   return (
     <div>
       {taskList.map((task: Task) => (
@@ -63,7 +43,7 @@ const TaskCard = (props: TaskCardProps) => {
           <Checkbox
             name="isDone"
             checked={task.isDone}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCheckboxChange(task, e.target.checked)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCheckboxChange(task, e.target.checked, setIsTaskListUpdated)}
           />
         </div>
       ))}

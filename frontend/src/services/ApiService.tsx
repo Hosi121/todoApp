@@ -47,3 +47,26 @@ export const initializeTasks = async (): Promise<Task[]> => {
     ];
   }
 };
+export const handleCheckboxChange = async (
+  task: Task,
+  isChecked: boolean,
+  setIsTaskListUpdated: (value: boolean) => void,
+) => {
+  try {
+    const response = await fetch(`${tasksApiUrl}/${task.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...task, isDone: isChecked }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save task');
+    }
+
+    setIsTaskListUpdated(true);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
