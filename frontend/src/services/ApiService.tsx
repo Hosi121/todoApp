@@ -1,6 +1,6 @@
 import { Task } from '../types/Task';
 const tasksApiUrl = 'http://localhost:8000/tasks';
-
+//初期化
 export const initializeTasks = async (): Promise<Task[]> => {
   try {
     const response = await fetch(tasksApiUrl, {
@@ -47,6 +47,7 @@ export const initializeTasks = async (): Promise<Task[]> => {
     ];
   }
 };
+//homeでのチェックボックスの変更
 export const handleCheckboxChange = async (
   task: Task,
   isChecked: boolean,
@@ -70,9 +71,10 @@ export const handleCheckboxChange = async (
     console.error('Error:', error);
   }
 };
+//タスクの追加
 export const postTask = async (task: Task) => {
   try {
-    const response = await fetch('http://localhost:8000/tasks', {
+    const response = await fetch(tasksApiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,11 +92,11 @@ export const postTask = async (task: Task) => {
     console.error('Error:', error);
   }
 };
-
+//タスクの消去
 export const deleteTask = async (id: number) => {
   try {
     console.log('deleteTask');
-    const response = await fetch(`http://localhost:8000/tasks/${id}`, {
+    const response = await fetch(`${tasksApiUrl}/${id}`, {
       method: 'DELETE',
     });
 
@@ -103,6 +105,24 @@ export const deleteTask = async (id: number) => {
     }
 
     console.log('Task deleted:', id);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+//タスクの編集の上書き
+export const putTask = async (editedTask:Task) => {
+  try {
+    const response = await fetch(`${tasksApiUrl}/${editedTask.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editedTask),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save task');
+    }
   } catch (error) {
     console.error('Error:', error);
   }

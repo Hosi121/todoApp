@@ -2,30 +2,12 @@ import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
 import { Task } from '../../types/Task';
 import { EditPageProps } from '../../types/EditPageProps';
-import { deleteTask } from '../../services/ApiService';
+import { deleteTask,putTask} from '../../services/ApiService';
 
 const EditPage = (props: EditPageProps) =>
 {
   const { taskList, setTaskList, setEditModalIsOpen, currentTask ,setIsTaskListUpdated} = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
-
-  const putTask = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/tasks/${editedTask.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editedTask),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save task');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -50,7 +32,7 @@ const EditPage = (props: EditPageProps) =>
 
 
   const handleSave = () => {
-    putTask();
+    putTask(editedTask);
     setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
