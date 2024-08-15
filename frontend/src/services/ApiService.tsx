@@ -70,3 +70,24 @@ export const handleCheckboxChange = async (
     console.error('Error:', error);
   }
 };
+
+export const postTask = async (task: Task) => {
+  try {
+    const response = await fetch('http://localhost:8000/tasks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
+
+    const result = await response.json();
+    console.log('Task created:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};

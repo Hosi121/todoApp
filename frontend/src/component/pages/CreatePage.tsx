@@ -2,6 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
 import { Task } from '../../types/Task';
 import { CreatePageProps } from '../../types/CreatePageProps';
+import { postTask } from '../../services/ApiService';
 
 const CreatePage = (props: CreatePageProps) => {
   const { taskList, setTaskList, setCreateModalIsOpen, setIsTaskListUpdated } = props;
@@ -20,27 +21,6 @@ const CreatePage = (props: CreatePageProps) => {
   });
 
   
-
-  const postTask = async (task:Task) => {
-    try {
-      const response = await fetch('http://localhost:8000/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(task),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create task');
-      }
-
-      const result = await response.json();
-      console.log('Task created:', result);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
