@@ -36,8 +36,6 @@ const CreatePage = (props: CreatePageProps) => {
       }
 
       const result = await response.json();
-      
-      
       console.log('Task created:', result);
     } catch (error) {
       console.error('Error:', error);

@@ -30,7 +30,6 @@ const TaskCard = (props: TaskCardProps) => {
 
   const handleCheckboxChange = async (task: Task, isChecked: boolean) =>
   {
-    
     try {
       const response = await fetch(`http://localhost:8000/tasks/${task.id}`, {
         method: 'PUT',
