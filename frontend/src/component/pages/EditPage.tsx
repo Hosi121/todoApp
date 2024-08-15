@@ -2,29 +2,12 @@ import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
 import { Task } from '../../types/Task';
 import { EditPageProps } from '../../types/EditPageProps';
+import { deleteTask } from '../../services/ApiService';
 
 const EditPage = (props: EditPageProps) =>
 {
   const { taskList, setTaskList, setEditModalIsOpen, currentTask ,setIsTaskListUpdated} = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
-
-    const deleteTask = async (id: number) => {
-      try {
-        console.log('deleteTask');
-        const response = await fetch(`http://localhost:8000/tasks/${id}`, {
-          method: 'DELETE',
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to delete task');
-        }
-
-        
-        console.log('Task deleted:', id);
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
 
   const putTask = async () => {
     try {

@@ -70,7 +70,6 @@ export const handleCheckboxChange = async (
     console.error('Error:', error);
   }
 };
-
 export const postTask = async (task: Task) => {
   try {
     const response = await fetch('http://localhost:8000/tasks', {
@@ -87,6 +86,23 @@ export const postTask = async (task: Task) => {
 
     const result = await response.json();
     console.log('Task created:', result);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+export const deleteTask = async (id: number) => {
+  try {
+    console.log('deleteTask');
+    const response = await fetch(`http://localhost:8000/tasks/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete task');
+    }
+
+    console.log('Task deleted:', id);
   } catch (error) {
     console.error('Error:', error);
   }
