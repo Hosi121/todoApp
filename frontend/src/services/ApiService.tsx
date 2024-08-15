@@ -1,9 +1,9 @@
 import { Task } from '../types/Task';
-const tasksApiUrl = 'http://localhost:8000/tasks';
+const baseUrl = 'http://localhost:8000/tasks';
 //初期化
 export const initializeTasks = async (): Promise<Task[]> => {
   try {
-    const response = await fetch(tasksApiUrl, {
+    const response = await fetch(baseUrl, {
       method: 'GET',
     });
 
@@ -54,7 +54,7 @@ export const handleCheckboxChange = async (
   setIsTaskListUpdated: (value: boolean) => void,
 ) => {
   try {
-    const response = await fetch(`${tasksApiUrl}/${task.id}`, {
+    const response = await fetch(`${baseUrl}/${task.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const handleCheckboxChange = async (
 //タスクの追加
 export const postTask = async (task: Task) => {
   try {
-    const response = await fetch(tasksApiUrl, {
+    const response = await fetch(baseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export const postTask = async (task: Task) => {
 export const deleteTask = async (id: number) => {
   try {
     console.log('deleteTask');
-    const response = await fetch(`${tasksApiUrl}/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
       method: 'DELETE',
     });
 
@@ -112,7 +112,7 @@ export const deleteTask = async (id: number) => {
 //タスクの編集の上書き
 export const putTask = async (editedTask:Task) => {
   try {
-    const response = await fetch(`${tasksApiUrl}/${editedTask.id}`, {
+    const response = await fetch(`${baseUrl}/${editedTask.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
