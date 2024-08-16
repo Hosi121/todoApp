@@ -1,18 +1,38 @@
 import { Task } from '../types/Task';
+
 const baseUrl = 'http://localhost:8000/tasks';
-//初期化
-export const initializeTasks = async (): Promise<Task[]> => {
+
+// APIリクエスト
+const apiRequest = async (
+  method: string,
+  endpoint: string = '',
+  body?: object,
+): Promise<Response> => {
   try {
-    const response = await fetch(baseUrl, {
-      method: 'GET',
+    const response = await fetch(`${baseUrl}${endpoint}`, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body ? JSON.stringify(body) : undefined,
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch tasks');
+      throw new Error(`Failed to ${method} request`);
     }
 
-    const tasks: Task[] = await response.json();
+    return response;
+  } catch (error) {
+    console.error(`Error in ${method} request:`, error);
+    throw error;
+  }
+};
 
+// 初期化
+export const initializeTasks = async (): Promise<Task[]> => {
+  try {
+    const response = await apiRequest('GET');
+    const tasks: Task[] = await response.json();
     return tasks.map((task: Task) => ({
       ...task,
       timeLimit: new Date(task.timeLimit),
@@ -21,7 +41,6 @@ export const initializeTasks = async (): Promise<Task[]> => {
     console.error('Error fetching tasks:', error);
     return [
       {
-        // task1
         id: 1,
         title: 'どんまい',
         isDone: false,
@@ -29,7 +48,6 @@ export const initializeTasks = async (): Promise<Task[]> => {
         taskDetail: 'Detail of Task 1',
       },
       {
-        // task2
         id: 2,
         title: 'もう一回頑張ろう',
         isDone: true,
@@ -37,7 +55,6 @@ export const initializeTasks = async (): Promise<Task[]> => {
         taskDetail: 'Detail of Task 2',
       },
       {
-        // task3
         id: 3,
         title: 'ファイト',
         isDone: false,
@@ -47,82 +64,46 @@ export const initializeTasks = async (): Promise<Task[]> => {
     ];
   }
 };
-//homeでのチェックボックスの変更
+
+// チェックボックスの変更
 export const handleCheckboxChange = async (
   task: Task,
   isChecked: boolean,
   setIsTaskListUpdated: (value: boolean) => void,
 ) => {
   try {
-    const response = await fetch(`${baseUrl}/${task.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...task, isDone: isChecked }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to save task');
-    }
-
+    await apiRequest('PUT', `/${task.id}`, { ...task, isDone: isChecked });
     setIsTaskListUpdated(true);
   } catch (error) {
     console.error('Error:', error);
   }
 };
-//タスクの追加
+
+// タスクの追加
 export const postTask = async (task: Task) => {
   try {
-    const response = await fetch(baseUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to create task');
-    }
-
+    const response = await apiRequest('POST', '', task);
     const result = await response.json();
     console.log('Task created:', result);
   } catch (error) {
     console.error('Error:', error);
   }
 };
-//タスクの消去
+
+// タスクの消去
 export const deleteTask = async (id: number) => {
   try {
-    console.log('deleteTask');
-    const response = await fetch(`${baseUrl}/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete task');
-    }
-
+    await apiRequest('DELETE', `/${id}`);
     console.log('Task deleted:', id);
   } catch (error) {
     console.error('Error:', error);
   }
 };
-//タスクの編集の上書き
-export const putTask = async (editedTask:Task) => {
-  try {
-    const response = await fetch(`${baseUrl}/${editedTask.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(editedTask),
-    });
 
-    if (!response.ok) {
-      throw new Error('Failed to save task');
-    }
+// タスクの編集
+export const putTask = async (editedTask: Task) => {
+  try {
+    await apiRequest('PUT', `/${editedTask.id}`, editedTask);
   } catch (error) {
     console.error('Error:', error);
   }
