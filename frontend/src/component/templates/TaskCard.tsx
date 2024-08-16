@@ -4,9 +4,10 @@ import Modal from 'react-modal';
 import EditPage from '../pages/EditPage';
 import { Task } from '../../types/Task';
 import { TaskCardProps } from '../../types/TaskCardProps';
+import { handleCheckboxChange } from '../../services/ApiService';
 
 const TaskCard = (props: TaskCardProps) => {
-  const { taskList, setTaskList } = props;
+  const { taskList, setTaskList, setIsTaskListUpdated} = props;
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
 
@@ -28,14 +29,6 @@ const TaskCard = (props: TaskCardProps) => {
     setEditModalIsOpen(true);
   };
 
-  const handleCheckboxChange = (task: Task, isChecked: boolean) => {
-    setTaskList((prevTaskList) =>
-      prevTaskList.map((t) =>
-        t.id === task.id ? { ...t, isDone: isChecked } : t
-      )
-    );
-  };
-
   return (
     <div>
       {taskList.map((task: Task) => (
@@ -50,7 +43,7 @@ const TaskCard = (props: TaskCardProps) => {
           <Checkbox
             name="isDone"
             checked={task.isDone}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCheckboxChange(task, e.target.checked)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleCheckboxChange(task, e.target.checked, setIsTaskListUpdated)}
           />
         </div>
       ))}
@@ -62,6 +55,7 @@ const TaskCard = (props: TaskCardProps) => {
             setTaskList={setTaskList}
             setEditModalIsOpen={setEditModalIsOpen}
             currentTask={currentTask}
+            setIsTaskListUpdated={setIsTaskListUpdated}
           />
         )}
       </Modal>

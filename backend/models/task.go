@@ -5,7 +5,7 @@ import (
 )
 
 type Task struct {
-    ID         int       `json:"id" gorm:"primaryKey"`
+    ID         int       `json:"id" gorm:"primaryKey;autoIncrement"`
     Title      string    `json:"title" gorm:"not null"`
     IsDone     bool      `json:"isDone" gorm:"not null"`
     TimeLimit  time.Time `json:"timeLimit" gorm:"not null"`

@@ -2,24 +2,38 @@ import { useState, ChangeEvent } from 'react';
 import TaskForm from '../molecules/TaskForm';
 import { Task } from '../../types/Task';
 import { EditPageProps } from '../../types/EditPageProps';
+import { deleteTask,putTask} from '../../services/ApiService';
 
 const EditPage = (props: EditPageProps) =>
 {
-  const { taskList, setTaskList, setEditModalIsOpen, currentTask } = props;
+  const { taskList, setTaskList, setEditModalIsOpen, currentTask ,setIsTaskListUpdated} = props;
   const [editedTask, setEditedTask] = useState<Task>(currentTask);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setEditedTask(prevTask => ({
-      ...prevTask,
-      [name]: type === 'checkbox' ? checked : name === 'timeLimit' ? new Date(value) : value,
-    }));
+
+    setEditedTask((prevTask) => {
+      let newValue;
+
+      if (type === 'checkbox') {
+        newValue = checked;
+      } else if (name === 'timeLimit') {
+        newValue = new Date(value);
+      } else {
+        newValue = value;
+      }
+
+      return {
+        ...prevTask,
+        [name]: newValue,
+      };
+    });
   };
 
+
   const handleSave = () => {
-    setTaskList(prevTaskList =>
-      prevTaskList.map(task => (task.id === editedTask.id ? editedTask : task))
-    );
+    putTask(editedTask);
+    setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
 
@@ -27,8 +41,10 @@ const EditPage = (props: EditPageProps) =>
     setEditModalIsOpen(false);
   };
 
-  const handleDelete = () => {
-    setTaskList(prevTaskList => prevTaskList.filter(task => task.id !== editedTask.id));
+  const handleDelete = () =>
+  {
+    deleteTask(editedTask.id);
+    setIsTaskListUpdated(true);
     setEditModalIsOpen(false);
   };
 

@@ -5,7 +5,7 @@ import CreatePage from '../pages/CreatePage';
 import { MakeTaskButtonProps } from '../../types/MakeTaskButtonProps';
 
 const MakeTaskButton = (props: MakeTaskButtonProps) => {
-  const { taskList, setTaskList } = props;
+  const { taskList, setTaskList, setIsTaskListUpdated } = props;
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const onClick = () => {
     setCreateModalIsOpen(true);
@@ -22,6 +22,7 @@ const MakeTaskButton = (props: MakeTaskButtonProps) => {
           taskList={taskList}
           setTaskList={setTaskList}
           setCreateModalIsOpen={setCreateModalIsOpen}
+          setIsTaskListUpdated={setIsTaskListUpdated}
         />
       </Modal>
     </>
